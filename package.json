@@ -1,0 +1,25 @@
+{
+  "name": "vocab",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "��#\u0000 \u0000V\u0000o\u0000c\u0000a\u0000b\u0000u\u0000l\u0000a\u0000r\u0000y\u0000E\u0000n\u0000g\u0000l\u0000i\u0000s\u0000h\u0000\r\u0000 \u0000",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tinySharky666/VocabularyEnglish.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tinySharky666/VocabularyEnglish/issues"
+  },
+  "homepage": "https://github.com/tinySharky666/VocabularyEnglish#readme",
+  "dependencies": {
+    "csv-parser": "^3.2.0",
+    "csv-writer": "^1.6.0"
+  }
+}
