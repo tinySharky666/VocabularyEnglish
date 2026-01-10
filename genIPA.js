@@ -24,8 +24,10 @@ function run() {
     .pipe(csv())
     .on("data", (data) => rows.push(data))
     .on("end", async () => {
+      let id = 1;
       for (const row of rows) {
         if (!row.pronunciation) {
+          row.id = id++
           row.pronunciation = await getIPA(encodeURIComponent(row.vocabulary));
         }
       }
