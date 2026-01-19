@@ -5,17 +5,28 @@ import { createObjectCsvWriter } from "csv-writer";
 const INPUT = "English.csv";
 const OUTPUT = "Final.csv";
 
-async function getIPA(word) {
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function getInfoWord(word) {
   try {
     const res = await fetch(
       `https://api.dictionaryapi.dev/api/v2/entries/en/${word}`
     );
     const data = await res.json();
-    return data[0]?.phonetic || "";
+
+    return {
+      ipa: data[0]?.phonetic || "",
+      class: [...new Set(
+        (data[0]?.meanings || []).map(m => m.partOfSpeech)
+      )].join(", ")
+    }
   } catch {
-    return "";
+    return { ipa: "", class: "" };
   }
 }
+
 
 function run() {
   const rows = [];
@@ -28,7 +39,10 @@ function run() {
       for (const row of rows) {
         if (!row.pronunciation) {
           row.id = id++
-          row.pronunciation = await getIPA(encodeURIComponent(row.vocabulary));
+          let info = await getInfoWord((row.vocabulary))
+          row.pronunciation = info.ipa;
+          row.class = info.class
+          await sleep(250);
         }
       }
 
@@ -37,6 +51,7 @@ function run() {
         header: [
           { id: "id", title:"ID"},
           { id: "vocabulary", title: "Vocabulary" },
+          { id: "class", title:"Class"},
           { id: "pronunciation", title: "Pronunciation" },
           { id: "meaning", title: "Meaning" },
           { id: "note", title: "Image/Note" },
